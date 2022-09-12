@@ -1,5 +1,7 @@
 from datetime import datetime
 from logging.config import listen
+# from readline import set_startup_hook
+from unittest import result
 import speech_recognition as sr
 import pyttsx3
 import webbrowser
@@ -44,6 +46,20 @@ def parseCommand():
     return query
 
 
+def search_wikipedia(query=''):
+    searchResults = wikipedia.search(query)
+    if not searchResults:
+        print('No Wikipedia result')
+        return 'No result received'
+    try:
+        wikiPage = wikipedia.page(searchResults[0])
+    except wikipedia.DisambiguationError as error:
+        wikiPage = wikipedia.page(error.options[0])
+    print(wikiPage.title)
+    wikiSummery = str(wikiPage.summary)
+    return wikiSummery
+
+
 # Main loop
 if __name__ == '__main__':
     speak('I am rita, your digital assistant. How can I help you?')
@@ -69,3 +85,9 @@ if __name__ == '__main__':
             speak('Opening...')
             query = ' '.join(query[2:])
             webbrowser.get('chrome').open_new(query)
+
+        # Wikipedia
+        if query[0] == 'wikipedia':
+            query = ' '.join(query[1:])
+            speak('Querying the universal data bank.')
+            speak(search_wikipedia(query))
