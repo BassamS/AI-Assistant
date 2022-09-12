@@ -6,12 +6,10 @@ import webbrowser
 import wikipedia
 import wolframalpha
 
-# Speech engine initialisation
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[1].id)  # 1 ====> male, 0 ====> female
-
-activationWord = 'computer'  # Single word, activation!
+engine.setProperty('voice', voices[0].id)  # 1 = male, 0 = female
+activationWord = 'rita'  # Single word, activation!
 
 
 def speak(text, rate=120):
@@ -37,12 +35,13 @@ def parseCommand():
         speak('I did not quite catch that')
         print(exception)
         return 'None'
+
     return query
 
 
 # Main loop
 if __name__ == '__main__':
-    speak('All systems nominal.')
+    speak('I am rita, your digital assistant. How can I help you?')
 
     while True:
         # Parse as a list
