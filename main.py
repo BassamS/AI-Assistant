@@ -1,6 +1,5 @@
 from datetime import datetime
 from logging.config import listen
-# from readline import set_startup_hook
 from unittest import result
 import speech_recognition as sr
 import pyttsx3
