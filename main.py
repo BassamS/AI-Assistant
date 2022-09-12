@@ -14,6 +14,12 @@ engine.setProperty('voice', voices[0].id)  # 0 ====> male, 1 ====> female
 activationWord = 'computer'  # Single word, activation!
 
 
+def speak(text, rate=120):
+    engine.setProperty('rate', rate)
+    engine.say(text)
+    engine.runAndWait()
+
+
 def parseCommand():
     listener = sr.Recognizer()
     print('Listening for a command')
@@ -28,7 +34,7 @@ def parseCommand():
         print(f'The input speech was: {query}')
     except Exception as exception:
         print('I did not quite catch that')
-
+        speak('I did not quite catch that')
         print(exception)
         return 'None'
     return query
