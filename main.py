@@ -9,7 +9,7 @@ import wolframalpha
 # Speech engine initialisation
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)  # 0 ====> male, 1 ====> female
+engine.setProperty('voice', voices[1].id)  # 1 ====> male, 0 ====> female
 
 activationWord = 'computer'  # Single word, activation!
 
@@ -38,3 +38,24 @@ def parseCommand():
         print(exception)
         return 'None'
     return query
+
+
+# Main loop
+if __name__ == '__main__':
+    speak('All systems nominal.')
+
+    while True:
+        # Parse as a list
+        query = parseCommand().lower().split()
+
+        if query[0] == activationWord:
+            query.pop(0)
+
+            # List commands
+            if query[0] == 'say':
+                if 'hello' in query:
+                    speak('Greetings, all.')
+                else:
+                    query.pop(0)  # Remove say
+                    speech = ' '.join(query)
+                    speak(speech)
