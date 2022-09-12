@@ -1,5 +1,5 @@
 from datetime import datetime
-# from logging.config import listen
+from logging.config import listen
 import speech_recognition as sr
 import pyttsx3
 import webbrowser
@@ -10,6 +10,11 @@ engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)  # 1 = male, 0 = female
 activationWord = 'rita'  # Single word, activation!
+
+# Configure browser
+# Set the path
+chrome_path = r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path))
 
 
 def speak(text, rate=120):
@@ -58,3 +63,9 @@ if __name__ == '__main__':
                     query.pop(0)  # Remove say
                     speech = ' '.join(query)
                     speak(speech)
+
+        # Navigation
+        if query[0] == 'go' and query[1] == 'to':
+            speak('Opening...')
+            query = ' '.join(query[2:])
+            webbrowser.get('chrome').open_new(query)
