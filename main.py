@@ -1,16 +1,14 @@
 from datetime import datetime
 from logging.config import listen
-from unittest import result
 import speech_recognition as sr
 import pyttsx3
 import webbrowser
 import wikipedia
-import wolframalpha
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)  # 1 = male, 0 = female
-activationWord = 'rita'  # Single word, activation!
+activationWord = 'computer'  # Single word, activation!
 
 # Configure browser
 # Set the path
@@ -90,3 +88,16 @@ if __name__ == '__main__':
             query = ' '.join(query[1:])
             speak('Querying the universal data bank.')
             speak(search_wikipedia(query))
+
+        # Note recording
+        if query[0] == 'log':
+            speak('Ready to record your note')
+            newNote = parseCommand().lower()
+            now = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+            with open('note_%s.txt' % now, 'w') as newFile:
+                newFile.write(newNote)
+            speak('Note written')
+
+        if query[0] == 'exit':
+            speak('Goodbye')
+            break
